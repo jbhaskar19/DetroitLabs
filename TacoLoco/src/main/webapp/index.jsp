@@ -42,28 +42,8 @@ function addItems(){
 // 		alert(order_request);
 }
 
+//Ajax call to controller
 
-function madeAjaxCall(){
-	alert(">>"+order_request);
-    $.ajax({
-     type: "post",
-     headers : {
-         'Accept' : 'application/json',
-         'Content-Type' : 'application/json'
-     },
-     url: "/total",
-     cache: false,    
-     data : order_request,
-     success: function(response){
-      var obj = JSON.parse(response);
-	  alert('finallly:'+obj);
-	  },
-     error: function(){      
-      alert('Error while request..');
-     }
-    });
-   }
-   
 </script>
 </head>
 <body>
@@ -79,11 +59,11 @@ function madeAjaxCall(){
   <button id="submitItem" onclick="addItems()">Add Item</button>
   
   
-<%-- <form:form id = "getTotal" method="post" > --%>
+<form:form id = "getTotal" method="post" action="/TacoLoco/total">
 <table id="order" border="1">
 	</table>
-  <button id="submitOrder" type="submit"  onclick="madeAjaxCall()" >Place Order</button>
-<%-- </form:form> --%>
+  <button id="submitOrder" type="submit">Place Order</button>
+</form:form> 
 
 </body>
 </html>

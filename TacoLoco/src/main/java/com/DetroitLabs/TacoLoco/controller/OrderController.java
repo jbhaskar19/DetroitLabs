@@ -14,9 +14,10 @@ import com.DetroitLabs.TacoLoco.model.Bill;
 import com.DetroitLabs.TacoLoco.model.Process;
 
 @Controller
+@RequestMapping("/total")
 public class OrderController {
 	
-	  @RequestMapping(value = "/total", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE) 
+	  @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE) 
 	  public @ResponseBody Bill CalculateOrderTotalArray(@RequestBody Process process) { 
 		  //Initiating the bill model to process then incoming instance of order Bill bill = new Bill();
 		  System.out.println("Total Order Cost:"); 
