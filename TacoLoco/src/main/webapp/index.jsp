@@ -7,53 +7,68 @@
 <head>
 <meta charset="UTF-8">
 <title>TACO LOCO</title>
-<script>
+<script type="text/javascript">
 	var orderObj = '{"order":[]}';
-	 var orderJSONObj = JSON.parse(orderObj);
+	var orderJSONObj = JSON.parse(orderObj);
+	var order_request;
 
-var order_request;
 
 function addItems(){
+
+    var itemselectindx = document.getElementById("orderlist");
+    var itemselect = itemselectindx.options[itemselectindx.selectedIndex].value;
+
+    var itemquantity = document.getElementById("quantity").value;
+    
+	  var items = document.createElement("TR");
+	  document.getElementById("order").appendChild(items);
+
+	  var item = document.createElement("TD");
+	  item.setAttribute("id", "item");
+	  var itemselectnode = document.createTextNode(itemselect);
+	  item.appendChild(itemselectnode);
 	  
-     var itemselectindx = document.getElementById("orderlist");
-     var itemselect = itemselectindx.options[itemselectindx.selectedIndex].value;
+	  items.appendChild(item);
 
-     var itemquantity = document.getElementById("quantity").value;
-          
-       var order = document.getElementById("order");
-       var mylist = document.createElement("li");
-       var item = document.createTextNode("item:" + itemselect + ',quantity:' + itemquantity);
-       mylist.appendChild(item);
-       order.appendChild(mylist);
-       
- 	orderJSONObj['order'].push({"item":itemselect,"quantity":itemquantity});
- 	order_request = JSON.stringify(orderJSONObj);
-
+	  var quantity = document.createElement("TD");
+	  quantity.setAttribute("id", "quantity");
+	  var itmquantity = document.createTextNode(itemquantity);
+	  quantity.appendChild(itmquantity);
+	  
+	  items.appendChild(quantity);
+      
+ 		orderJSONObj['order'].push({"item":itemselect,"quantity":itemquantity});
+ 		order_request = JSON.stringify(orderJSONObj);
+// 		alert(order_request);
 }
 
 
-function myOrderFunction(){
-	alert(order_request);
-	$.ajax({
-        type: "POST",
-        url : 'total',
-        data : order_request,
-        contentType:"application/json; charset=utf-8",
-        dataType:"json",
-        success : function(resp){
-           alert(resp);
-        },
-        error : function(resp){
-            alert(resp);
-        }
+function madeAjaxCall(){
+	alert(">>"+order_request);
+    $.ajax({
+     type: "post",
+     headers : {
+         'Accept' : 'application/json',
+         'Content-Type' : 'application/json'
+     },
+     url: "/total",
+     cache: false,    
+     data : order_request,
+     success: function(response){
+      var obj = JSON.parse(response);
+	  alert('finallly:'+obj);
+	  },
+     error: function(){      
+      alert('Error while request..');
+     }
     });
-}
-
+   }
+   
 </script>
 </head>
 <body>
  
-    HOME SCREEN TACOLO            
+    HOME SCREEN<br> TACOLOCO <br>            
 <select id="orderlist">
     <option value="VeggieTaco">Veggie Taco</option>
     <option value="ChickenTaco">Chicken Taco</option>
@@ -63,9 +78,11 @@ function myOrderFunction(){
   <input id="quantity" type="number">
   <button id="submitItem" onclick="addItems()">Add Item</button>
   
-<%-- <form:form method="POST" action="total" modelAttribute="Process"> --%>
- <ol style="list-style-type:none" id="order"></ol> 
-  <button id="submitOrder" type="submit" onsubmit="myOrderFunction()">Place Order</button>
+  
+<%-- <form:form id = "getTotal" method="post" > --%>
+<table id="order" border="1">
+	</table>
+  <button id="submitOrder" type="submit"  onclick="madeAjaxCall()" >Place Order</button>
 <%-- </form:form> --%>
 
 </body>

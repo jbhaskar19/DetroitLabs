@@ -1,6 +1,7 @@
 package com.DetroitLabs.TacoLoco.controller;
 
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,7 @@ import com.DetroitLabs.TacoLoco.model.Process;
 @Controller
 public class OrderController {
 	
-	  @RequestMapping(value = "/total", method = RequestMethod.POST, produces ="application/json", consumes = "application/json") 
+	  @RequestMapping(value = "/total", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE) 
 	  public @ResponseBody Bill CalculateOrderTotalArray(@RequestBody Process process) { 
 		  //Initiating the bill model to process then incoming instance of order Bill bill = new Bill();
 		  System.out.println("Total Order Cost:"); 
