@@ -12,13 +12,17 @@
 	var orderJSONObj = JSON.parse(orderObj);
 	var order_request;
 
-
+	
 function addItems(){
 
     var itemselectindx = document.getElementById("orderlist");
     var itemselect = itemselectindx.options[itemselectindx.selectedIndex].value;
-
     var itemquantity = document.getElementById("quantity").value;
+    
+    if(itemquantity ===""){
+    	alert("Enter value");
+    	return false;
+    }
     
 	  var items = document.createElement("TR");
 	  document.getElementById("order").appendChild(items);
@@ -36,10 +40,22 @@ function addItems(){
 	  quantity.appendChild(itmquantity);
 	  
 	  items.appendChild(quantity);
+	  
+// 	  var deleteButton = document.createElement("TD");
+
+// 	  var buttonitem = document.createElement("BUTTON");
+// 	  buttonitem.innerHTML = "Delete";
+// 	  buttonitem.setAttribute("id", "deletebutton");
+
+// 	  deleteButton.appendChild(buttonitem);
+// 	  items.appendChild(deleteButton);
+	  
       
  		orderJSONObj['order'].push({"item":itemselect,"quantity":itemquantity});
  		order_request = JSON.stringify(orderJSONObj);
 // 		alert(order_request);
+ 		document.getElementById("submitOrder").style.visibility = "visible";
+
 }
 
 //Ajax call to controller
@@ -56,13 +72,13 @@ function addItems(){
   <option value="ChorizoTaco">Chorizo Taco</option>
   </select>
   <input id="quantity" type="number" min="1">
-  <button id="submitItem" onclick="addItems()">Add Item</button>
+  <button id="submitItem" onclick="return addItems()">Add Item</button>
   
   
 <form:form id = "getTotal" method="post" action="/TacoLoco/total">
 <table id="order" border="1">
 	</table>
-  <button id="submitOrder" type="submit">Place Order</button>
+  <button id="submitOrder" style="visibility:hidden" type="submit">Place Order</button>
 </form:form> 
 
 </body>
