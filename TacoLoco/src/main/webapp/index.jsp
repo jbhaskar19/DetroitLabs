@@ -75,7 +75,7 @@ function madeAjaxCall(){
      <option value="BeefTaco">Beef Taco</option>
   <option value="ChorizoTaco">Chorizo Taco</option>
   </select>
-  <input id="quantity" type="number">
+  <input id="quantity" type="number" min="1">
   <button id="submitItem" onclick="addItems()">Add Item</button>
   
   
